@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Hub Live — Administrador</title>
+    <link rel="stylesheet" href="Administrador.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+</head>
+<body>
+    <header class="admin-header">
+        <div class="container">
+            <div class="brand"><i class="ri-graduation-cap-line"></i> Class Hub Live</div>
+            <nav class="admin-nav">
+                <a href="index.html" class="link">Inicio</a>
+                <a href="#cursos" class="link">Cursos</a>
+                <a href="#perfiles-docentes" class="link">Docentes</a>
+                <a href="#estudiantes" class="link">Estudiantes</a>
+                <a href="#" class="link link-logout">Cerrar sesión</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="admin-main container">
+        <section class="page-title">
+            <h1>Panel de Administrador</h1>
+            <p>Gestión completa de cursos, docentes, estudiantes y configuración del sistema.</p>
+        </section>
+
+        <!-- Gestión de Cursos -->
+        <section id="cursos" class="card" style="display: none;">
+            <h2>Gestión de Cursos</h2>
+            <p style="color: #666; margin-bottom: 20px;">Visualiza y gestiona todos los cursos creados por los profesores.</p>
+            <div class="actions">
+                <input type="search" id="searchCurso" placeholder="Buscar curso por nombre, docente o categoría">
+            </div>
+            <div id="cursosGrid" class="cursos-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
+                <p style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #666;">Cargando cursos...</p>
+            </div>
+        </section>
+
+        <section id="perfiles-docentes" class="card" style="display: none;">
+            <h2>Perfiles de docentes</h2>
+            <div class="actions">
+                <button class="btn" id="btnCrearDocente"><i class="ri-user-add-line"></i> Crear docente</button>
+                <input type="search" id="searchDocente" placeholder="Buscar docente por nombre o correo">
+            </div>
+            <table class="table" aria-label="Listado de docentes">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaDocentes">
+                    <tr>
+                        <td>Ana Pérez</td>
+                        <td>ana.perez@clh.edu</td>
+                        <td>Activo</td>
+                        <td>
+                            <button class="btn btn-small"><i class="ri-pencil-line"></i> Editar</button>
+                            <button class="btn btn-small btn-outline"><i class="ri-close-line"></i> Desactivar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Carlos López</td>
+                        <td>c.lopez@clh.edu</td>
+                        <td>Inactivo</td>
+                        <td>
+                            <button class="btn btn-small"><i class="ri-pencil-line"></i> Editar</button>
+                            <button class="btn btn-small btn-primary"><i class="ri-check-line"></i> Activar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Gestión de Estudiantes -->
+        <section id="estudiantes" class="card" style="display: none;">
+            <h2>Gestión de Estudiantes</h2>
+            <p style="color: #666; margin-bottom: 20px;">Visualiza y gestiona todos los estudiantes registrados en la plataforma.</p>
+            <div class="actions">
+                <input type="search" id="searchEstudiante" placeholder="Buscar estudiante por nombre o correo">
+            </div>
+            <table class="table" aria-label="Listado de estudiantes">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Cursos Inscritos</th>
+                        <th>Fecha de Registro</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaEstudiantes">
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 40px; color: #666;">Cargando estudiantes...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer class="admin-footer">
+        <div class="container">
+            <p>&copy; 2025 Class Hub Live</p>
+        </div>
+    </footer>
+
+    <!-- Modal Docente -->
+    <div class="modal-overlay" id="docenteModal" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="docenteModalTitle">
+            <button class="modal-close" id="closeDocenteModal" aria-label="Cerrar">&times;</button>
+            <h2 id="docenteModalTitle">Docente</h2>
+            <form id="docenteForm">
+                <input type="hidden" id="docenteId">
+                <div class="form-group">
+                    <label for="docenteNombre">Nombre completo</label>
+                    <input type="text" id="docenteNombre" required placeholder="Ej. Ana Pérez">
+                </div>
+                <div class="form-group">
+                    <label for="docenteCorreo">Correo electrónico</label>
+                    <input type="email" id="docenteCorreo" required placeholder="nombre@clh.edu">
+                </div>
+                <div class="form-group">
+                    <label for="docenteEstado">Estado</label>
+                    <select id="docenteEstado">
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="docenteRoles">Roles</label>
+                    <select id="docenteRoles" multiple>
+                        <option value="Docente básico">Docente básico</option>
+                        <option value="Docente avanzado">Docente avanzado</option>
+                        <option value="Coordinador">Coordinador</option>
+                    </select>
+                    <small>Ctrl/Cmd + clic para seleccionar múltiples.</small>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn">Guardar</button>
+                    <button type="button" class="btn btn-outline" id="cancelDocente">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase Configuration -->
+    <script src="firebase-config.js?v=2.0"></script>
+    <!-- Firebase Authentication -->
+    <script src="firebase-auth.js?v=2.0"></script>
+    <!-- Firebase Cursos -->
+    <script src="firebase-cursos.js?v=2.0"></script>
+    <script src="Administrador.js"></script>
+    <script src="Administrador-cursos.js"></script>
+    <script src="Administrador-estudiantes.js"></script>
+    <script>
+        // Navegación por secciones
+        (function() {
+            // Obtener todas las secciones
+            const secciones = {
+                'cursos': document.getElementById('cursos'),
+                'perfiles-docentes': document.getElementById('perfiles-docentes'),
+                'estudiantes': document.getElementById('estudiantes')
+            };
+            
+            // Obtener todos los enlaces de navegación
+            const navLinks = document.querySelectorAll('.admin-nav .link[href^="#"]');
+            
+            // Función para mostrar una sección específica
+            function mostrarSeccion(seccionId) {
+                // Ocultar todas las secciones
+                Object.values(secciones).forEach(seccion => {
+                    if (seccion) seccion.style.display = 'none';
+                });
+                
+                // Mostrar la sección seleccionada
+                if (secciones[seccionId]) {
+                    secciones[seccionId].style.display = 'block';
+                }
+                
+                // Actualizar estado activo de los enlaces
+                navLinks.forEach(link => {
+                    link.style.background = '';
+                    link.style.color = '';
+                    link.style.fontWeight = '';
+                });
+                
+                // Resaltar el enlace activo
+                const activeLink = document.querySelector(`.admin-nav .link[href="#${seccionId}"]`);
+                if (activeLink) {
+                    activeLink.style.background = '#f0f7ff';
+                    activeLink.style.color = '#0056d2';
+                    activeLink.style.fontWeight = '600';
+                }
+            }
+            
+            // Manejar clics en los enlaces de navegación
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const href = this.getAttribute('href');
+                    if (href.startsWith('#')) {
+                        const seccionId = href.substring(1);
+                        mostrarSeccion(seccionId);
+                        // Actualizar URL sin recargar
+                        window.history.pushState({seccion: seccionId}, '', `#${seccionId}`);
+                    }
+                });
+            });
+            
+            // Manejar navegación con hash en la URL
+            function manejarHash() {
+                const hash = window.location.hash.substring(1);
+                if (hash && secciones[hash]) {
+                    mostrarSeccion(hash);
+                } else {
+                    // Por defecto mostrar la primera sección (cursos)
+                    mostrarSeccion('cursos');
+                }
+            }
+            
+            // Ejecutar al cargar la página
+            window.addEventListener('load', manejarHash);
+            window.addEventListener('hashchange', manejarHash);
+            
+            // Si no hay hash, mostrar cursos por defecto
+            if (!window.location.hash) {
+                mostrarSeccion('cursos');
+            }
+        })();
+    </script>
+</body>
+</html>
+

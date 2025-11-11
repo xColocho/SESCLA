@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Hub Live — Docente</title>
+    <link rel="stylesheet" href="Docente.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+</head>
+<body>
+    <header class="docente-header">
+        <div class="container">
+            <div class="brand"><i class="ri-graduation-cap-line"></i> Class Hub Live</div>
+            <nav class="docente-nav">
+                <a href="index.html" class="link">Inicio</a>
+                <a href="#gestion-cursos" class="link">Gestión de cursos</a>
+                <a href="#estudiantes" class="link">Estudiantes</a>
+                <a href="#sesiones" class="link">Sesiones virtuales</a>
+                <a href="#" class="link link-logout">Cerrar sesión</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="docente-main container">
+        <section class="page-title">
+            <h1>Panel de Docente</h1>
+            <p>Gestión de cursos, estudiantes, sesiones virtuales y comunicación en tiempo real.</p>
+        </section>
+
+        <!-- Gestión de Cursos -->
+        <section id="gestion-cursos" class="card" style="display: none;">
+            <h2>Gestión de cursos</h2>
+            <div class="actions">
+                <button class="btn" id="btnCrearCurso"><i class="ri-add-box-line"></i> Crear curso</button>
+                <input type="search" id="searchCurso" placeholder="Buscar curso por nombre">
+            </div>
+            <div class="cursos-grid" id="cursosGrid">
+                <div class="curso-card">
+                    <h3>Matemáticas Avanzadas</h3>
+                    <p>15 estudiantes inscritos</p>
+                    <div class="curso-actions">
+                        <button class="btn btn-small"><i class="ri-pencil-line"></i> Editar</button>
+                        <button class="btn btn-small btn-outline"><i class="ri-team-line"></i> Ver estudiantes</button>
+                    </div>
+                </div>
+                <div class="curso-card">
+                    <h3>Programación Web</h3>
+                    <p>22 estudiantes inscritos</p>
+                    <div class="curso-actions">
+                        <button class="btn btn-small"><i class="ri-pencil-line"></i> Editar</button>
+                        <button class="btn btn-small btn-outline"><i class="ri-team-line"></i> Ver estudiantes</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Estudiantes -->
+        <section id="estudiantes" class="card" style="display: none;">
+            <h2>Gestión de estudiantes</h2>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="inscripcion"><i class="ri-check-line"></i> Inscripción automatizada</button>
+                <button class="tab-btn" data-tab="importacion"><i class="ri-upload-2-line"></i> Importación masiva</button>
+                <button class="tab-btn" data-tab="lista"><i class="ri-file-list-line"></i> Lista de estudiantes</button>
+            </div>
+
+            <!-- Pestaña: Inscripción Automatizada -->
+            <div class="tab-content active" id="tab-inscripcion">
+                <h3>Inscripción automatizada de estudiantes a cursos</h3>
+                <form id="formInscripcion" class="form-inline">
+                    <div class="form-group">
+                        <label for="selectCurso">Curso</label>
+                        <select id="selectCurso" required>
+                            <option value="">Selecciona un curso</option>
+                            <option value="1">Matemáticas Avanzadas</option>
+                            <option value="2">Programación Web</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="selectEstudiante">Estudiante</label>
+                        <select id="selectEstudiante" required>
+                            <option value="">Selecciona un estudiante</option>
+                            <option value="1">Juan García</option>
+                            <option value="2">María López</option>
+                            <option value="3">Pedro Martínez</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn"><i class="ri-check-line"></i> Inscribir</button>
+                </form>
+                <div id="mensajeInscripcion" class="mensaje"></div>
+            </div>
+
+            <!-- Pestaña: Importación Masiva -->
+            <div class="tab-content" id="tab-importacion">
+                <h3>Importación masiva de estudiantes</h3>
+                <p>Sube un archivo CSV con los datos de los estudiantes.</p>
+                <form id="formImportacion" class="form-upload">
+                    <div class="upload-area" id="uploadArea">
+                        <input type="file" id="fileImportacion" accept=".csv" style="display: none;">
+                        <label for="fileImportacion" class="upload-label">
+                            <span class="upload-icon">📁</span>
+                            <span>Haz clic para seleccionar archivo CSV</span>
+                            <small>Formato: Nombre, Correo, Curso</small>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn" id="btnImportar"><i class="ri-upload-2-line"></i> Importar estudiantes</button>
+                </form>
+                <div id="mensajeImportacion" class="mensaje"></div>
+            </div>
+
+            <!-- Pestaña: Lista de Estudiantes -->
+            <div class="tab-content" id="tab-lista">
+                <h3>Lista de estudiantes</h3>
+                <div class="actions">
+                    <input type="search" id="searchEstudiante" placeholder="Buscar estudiante">
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Curso</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaEstudiantes">
+                        <tr>
+                            <td>Juan García</td>
+                            <td>juan.garcia@clh.edu</td>
+                            <td>Matemáticas Avanzadas</td>
+                            <td>Activo</td>
+                            <td>
+                                <button class="btn btn-small"><i class="ri-eye-line"></i> Ver detalles</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>María López</td>
+                            <td>maria.lopez@clh.edu</td>
+                            <td>Programación Web</td>
+                            <td>Activo</td>
+                            <td>
+                                <button class="btn btn-small"><i class="ri-eye-line"></i> Ver detalles</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sesiones Virtuales -->
+        <section id="sesiones" class="card" style="display: none;">
+            <h2>Sesiones virtuales</h2>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="programar"><i class="ri-timer-line"></i> Programar sesión</button>
+                <button class="tab-btn" data-tab="activas"><i class="ri-play-circle-line"></i> Sesiones activas</button>
+                <button class="tab-btn" data-tab="historial"><i class="ri-history-line"></i> Historial</button>
+            </div>
+
+            <!-- Pestaña: Programar Sesión -->
+            <div class="tab-content active" id="tab-programar">
+                <h3>Programar nueva sesión virtual</h3>
+                <form id="formSesion" class="form-sesion">
+                    <div class="form-group">
+                        <label for="sesionCurso">Curso</label>
+                        <select id="sesionCurso" required>
+                            <option value="">Selecciona un curso</option>
+                            <option value="1">Matemáticas Avanzadas</option>
+                            <option value="2">Programación Web</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sesionTitulo">Título de la sesión</label>
+                        <input type="text" id="sesionTitulo" required placeholder="Ej. Clase 1: Introducción">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="sesionFecha">Fecha</label>
+                            <input type="date" id="sesionFecha" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sesionHora">Hora</label>
+                            <input type="time" id="sesionHora" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sesionDuracion">Duración (minutos)</label>
+                        <input type="number" id="sesionDuracion" min="15" max="180" value="60" required>
+                    </div>
+                    <button type="submit" class="btn"><i class="ri-calendar-schedule-line"></i> Programar sesión</button>
+                </form>
+                <div id="mensajeSesion" class="mensaje"></div>
+            </div>
+
+            <!-- Pestaña: Sesiones Activas -->
+            <div class="tab-content" id="tab-activas">
+                <h3>Sesiones activas</h3>
+                <div class="sesiones-list" id="sesionesActivas">
+                    <div class="sesion-card">
+                        <div class="sesion-info">
+                            <h4>Matemáticas Avanzadas - Clase 1</h4>
+                            <p>Fecha: 15/01/2025 a las 10:00</p>
+                            <p>Estudiantes conectados: 12/15</p>
+                        </div>
+                        <button class="btn btn-primary" data-action="iniciar-sesion" data-id="1"><i class="ri-play-circle-line"></i> Iniciar sesión</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pestaña: Historial -->
+            <div class="tab-content" id="tab-historial">
+                <h3>Historial de sesiones</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Curso</th>
+                            <th>Fecha y hora</th>
+                            <th>Duración</th>
+                            <th>Asistencia</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaHistorial">
+                        <tr>
+                            <td>Introducción a la Programación</td>
+                            <td>Programación Web</td>
+                            <td>10/01/2025 14:00</td>
+                            <td>60 min</td>
+                            <td>20/22</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de Sesión Virtual -->
+    <div class="modal-overlay" id="sesionModal" aria-hidden="true">
+        <div class="modal-content modal-sesion" role="dialog" aria-modal="true">
+            <button class="modal-close" id="closeSesionModal" aria-label="Cerrar">&times;</button>
+            <div class="sesion-header">
+                <h2 id="sesionTituloModal">Sesión Virtual</h2>
+                <div class="sesion-stats">
+                    <span id="estudiantesConectados">0 estudiantes conectados</span>
+                    <span id="sesionDuracion">00:00</span>
+                </div>
+            </div>
+            <div class="sesion-body">
+                <div class="sesion-video">
+                    <div class="video-placeholder">
+                        <p>Vista previa de video</p>
+                        <p class="video-icon">🎥</p>
+                    </div>
+                </div>
+                <div class="sesion-chat">
+                    <h3>Chat en tiempo real</h3>
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="chat-message">
+                            <span class="chat-user">Sistema:</span>
+                            <span class="chat-text">Sesión iniciada. Bienvenidos.</span>
+                        </div>
+                    </div>
+                    <form id="formChat" class="chat-input">
+                        <input type="text" id="chatInput" placeholder="Escribe un mensaje..." required>
+                        <button type="submit" class="btn btn-small"><i class="ri-send-plane-2-line"></i> Enviar</button>
+                    </form>
+                </div>
+            </div>
+            <div class="sesion-footer">
+                <button class="btn btn-outline" id="btnFinalizarSesion"><i class="ri-stop-circle-line"></i> Finalizar sesión</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="docente-footer">
+        <div class="container">
+            <p>&copy; 2025 Class Hub Live</p>
+        </div>
+    </footer>
+
+    <!-- Modal de Curso -->
+    <div class="modal-overlay" id="cursoModal" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true">
+            <button class="modal-close" id="closeCursoModal" aria-label="Cerrar">&times;</button>
+            <h2 id="cursoModalTitle">Crear Curso</h2>
+            <form id="cursoForm">
+                <input type="hidden" id="cursoId">
+                
+                <div class="form-group">
+                    <label for="cursoNombre">Nombre del Curso</label>
+                    <input type="text" id="cursoNombre" required placeholder="Ej. Matemáticas Avanzadas">
+                </div>
+                
+                <div class="form-group">
+                    <label for="cursoDescripcion">Descripción</label>
+                    <textarea id="cursoDescripcion" rows="4" placeholder="Describe el contenido del curso..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cursoTemario">Temario (Una línea por tema)</label>
+                    <textarea id="cursoTemario" rows="8">Tema 1: Introducción
+Tema 2: Conceptos básicos
+Tema 3: Ejemplos prácticos
+Tema 4: Evaluación</textarea>
+                    <div style="display: flex; gap: 10px; margin-top: 10px; align-items: center;">
+                        <button type="button" id="btnAgregarTema" class="btn btn-small" style="background: #10b981; padding: 8px 16px; font-size: 14px;">
+                            <i class="ri-add-line"></i> Agregar Tema
+                        </button>
+                        <small style="color: #666; flex: 1;">Escribe cada tema en una línea separada. Haz clic en "Agregar Tema" para añadir más.</small>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cursoCategoria">Categoría</label>
+                        <select id="cursoCategoria" required>
+                            <option value="General">General</option>
+                            <option value="Matemáticas">Matemáticas</option>
+                            <option value="Programación">Programación</option>
+                            <option value="Ciencias">Ciencias</option>
+                            <option value="Idiomas">Idiomas</option>
+                            <option value="Arte">Arte</option>
+                            <option value="Negocios">Negocios</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cursoDuracion">Duración (horas)</label>
+                        <input type="number" id="cursoDuracion" min="1" value="10" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cursoNivel">Nivel</label>
+                        <select id="cursoNivel" required>
+                            <option value="Principiante">Principiante</option>
+                            <option value="Intermedio">Intermedio</option>
+                            <option value="Avanzado">Avanzado</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cursoEstado">Estado</label>
+                        <select id="cursoEstado" required>
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                            <option value="Borrador">Borrador</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="terms-checkbox">
+                        <input type="checkbox" id="cursoVisibleEstudiantes" checked>
+                        <span>Visible para estudiantes en la app móvil</span>
+                    </label>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn">Guardar Curso</button>
+                    <button type="button" class="btn btn-outline" id="cancelCurso">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="firebase-config.js?v=2.0"></script>
+    <script src="firebase-cursos.js?v=2.0"></script>
+    <script src="firebase-auth.js?v=2.0"></script>
+    <script src="Docente.js"></script>
+    <script src="Docente-cursos.js"></script>
+    <script>
+        // Navegación por secciones
+        (function() {
+            // Obtener todas las secciones
+            const secciones = {
+                'gestion-cursos': document.getElementById('gestion-cursos'),
+                'estudiantes': document.getElementById('estudiantes'),
+                'sesiones': document.getElementById('sesiones')
+            };
+            
+            // Obtener todos los enlaces de navegación
+            const navLinks = document.querySelectorAll('.docente-nav .link[href^="#"]');
+            
+            // Función para mostrar una sección específica
+            function mostrarSeccion(seccionId) {
+                // Ocultar todas las secciones
+                Object.values(secciones).forEach(seccion => {
+                    if (seccion) seccion.style.display = 'none';
+                });
+                
+                // Mostrar la sección seleccionada
+                if (secciones[seccionId]) {
+                    secciones[seccionId].style.display = 'block';
+                }
+                
+                // Actualizar estado activo de los enlaces
+                navLinks.forEach(link => {
+                    link.style.background = '';
+                    link.style.color = '';
+                    link.style.fontWeight = '';
+                });
+                
+                // Resaltar el enlace activo
+                const activeLink = document.querySelector(`.docente-nav .link[href="#${seccionId}"]`);
+                if (activeLink) {
+                    activeLink.style.background = '#f0f7ff';
+                    activeLink.style.color = '#0056d2';
+                    activeLink.style.fontWeight = '600';
+                }
+            }
+            
+            // Manejar clics en los enlaces de navegación
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const href = this.getAttribute('href');
+                    if (href.startsWith('#')) {
+                        const seccionId = href.substring(1);
+                        mostrarSeccion(seccionId);
+                        // Actualizar URL sin recargar
+                        window.history.pushState({seccion: seccionId}, '', `#${seccionId}`);
+                    }
+                });
+            });
+            
+            // Manejar navegación con hash en la URL
+            function manejarHash() {
+                const hash = window.location.hash.substring(1);
+                if (hash && secciones[hash]) {
+                    mostrarSeccion(hash);
+                } else {
+                    // Por defecto mostrar la primera sección (gestión de cursos)
+                    mostrarSeccion('gestion-cursos');
+                }
+            }
+            
+            // Ejecutar al cargar la página
+            window.addEventListener('load', manejarHash);
+            window.addEventListener('hashchange', manejarHash);
+            
+            // Si no hay hash, mostrar gestión de cursos por defecto
+            if (!window.location.hash) {
+                mostrarSeccion('gestion-cursos');
+            }
+        })();
+    </script>
+</body>
+</html>
+

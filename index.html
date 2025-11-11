@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Hub Live</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <a href="#" class="logo"><i class="ri-graduation-cap-line"></i> Class Hub Live</a>
+                <div class="nav-buttons">
+                    <button class="btn-login"><i class="ri-door-open-line"></i> Iniciar Sesión</button>
+                    <button class="btn-signup"><i class="ri-user-add-line"></i> Únete Gratis</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="hero-main-content">
+                        <h1>Transforma tu carrera con educación de clase mundial</h1>
+                        <p class="hero-subtitle">Más de 10,000 cursos profesionales diseñados por expertos de las mejores instituciones. Desarrolla las habilidades que buscan los empleadores y alcanza tus objetivos profesionales con nuestra plataforma de aprendizaje en línea.</p>
+                        <p class="hero-description">Únete a millones de estudiantes que ya están transformando sus carreras. Accede a contenido exclusivo, certificados reconocidos y una comunidad global de aprendices apasionados.</p>
+                        
+                        <div class="hero-badges">
+                            <div class="badge-item">
+                                <i class="ri-graduation-cap-fill"></i>
+                                <span>10,000+ Cursos</span>
+                            </div>
+                            <div class="badge-item">
+                                <i class="ri-user-star-fill"></i>
+                                <span>Expertos Certificados</span>
+                            </div>
+                            <div class="badge-item">
+                                <i class="ri-award-fill"></i>
+                                <span>Certificados Válidos</span>
+                            </div>
+                            <div class="badge-item">
+                                <i class="ri-global-line"></i>
+                                <span>Acceso Global</span>
+                            </div>
+                            <div class="badge-item">
+                                <i class="ri-time-line"></i>
+                                <span>Aprendizaje Flexible</span>
+                            </div>
+                            <div class="badge-item">
+                                <i class="ri-user-line"></i>
+                                <span>5M+ Estudiantes</span>
+                            </div>
+                        </div>
+                        
+                        <div class="hero-cta">
+                            <button class="btn-hero-primary"><i class="ri-rocket-line"></i> Comienza Gratis Hoy</button>
+                            <button class="btn-hero-secondary"><i class="ri-play-circle-line"></i> Ver Demo</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Estadísticas del Hero -->
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">5M+</div>
+                            <div class="stat-label">Estudiantes Activos</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">10K+</div>
+                            <div class="stat-label">Cursos Disponibles</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Instructores Expertos</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">95%</div>
+                            <div class="stat-label">Tasa de Satisfacción</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-carousel-wrapper">
+                    <!-- Carrusel de Imágenes Ultra HD -->
+                    <div class="carousel-container">
+                        <div class="carousel-slide">
+                            <img src="IMAGENES/Cabecera.jpg" alt="Educación de calidad" loading="eager" fetchpriority="high" decoding="async">
+                            <img src="IMAGENES/CURSO2.jpg" alt="Cursos profesionales" loading="lazy" decoding="async">
+                            <img src="IMAGENES/CURSO3.png" alt="Aprende en línea" loading="lazy" decoding="async">
+                            <img src="IMAGENES/CURSO4.jpg" alt="Desarrollo profesional" loading="lazy" decoding="async">
+                        </div>
+                        <button class="carousel-prev" aria-label="Anterior">‹</button>
+                        <button class="carousel-next" aria-label="Siguiente">›</button>
+                        <div class="carousel-dots">
+                            <span class="dot active" data-slide="0"></span>
+                            <span class="dot" data-slide="1"></span>
+                            <span class="dot" data-slide="2"></span>
+                            <span class="dot" data-slide="3"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Información adicional debajo del carousel -->
+                    <div class="hero-features">
+                        <div class="feature-highlight">
+                            <i class="ri-checkbox-circle-fill"></i>
+                            <span>Prueba gratuita de 7 días</span>
+                        </div>
+                        <div class="feature-highlight">
+                            <i class="ri-checkbox-circle-fill"></i>
+                            <span>Sin compromiso, cancela cuando quieras</span>
+                        </div>
+                        <div class="feature-highlight">
+                            <i class="ri-checkbox-circle-fill"></i>
+                            <span>Certificados reconocidos internacionalmente</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-wave"></div>
+    </section>
+
+    <!-- Pricing Plans Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Elige el plan que mejor se adapte a ti</h2>
+                <p class="pricing-subtitle">Todos los planes incluyen prueba gratuita de 7 días. Cancela en cualquier momento.</p>
+            </div>
+            <div class="pricing-grid">
+                <!-- Plan Gratuito -->
+                <div class="pricing-card">
+                    <div class="plan-header">
+                        <h3>Plan Gratuito</h3>
+                        <div class="plan-price">
+                            <span class="price-amount">$0</span>
+                            <span class="price-period">/mes</span>
+                        </div>
+                        <p class="plan-description">Perfecto para empezar</p>
+                    </div>
+                    <ul class="plan-features">
+                        <li><i class="ri-check-line"></i> Acceso a cursos básicos</li>
+                        <li><i class="ri-check-line"></i> Contenido limitado</li>
+                        <li><i class="ri-check-line"></i> Certificados básicos</li>
+                        <li><i class="ri-check-line"></i> Soporte por email</li>
+                    </ul>
+                    <button class="btn-plan btn-plan-free"><i class="ri-rocket-line"></i> Comenzar Gratis</button>
+                </div>
+
+                <!-- Plan Mensual -->
+                <div class="pricing-card featured">
+                    <div class="plan-badge">Más Popular</div>
+                    <div class="plan-header">
+                        <h3>Plan Mensual</h3>
+                        <div class="plan-price">
+                            <span class="price-amount">$59</span>
+                            <span class="price-period">/mes</span>
+                        </div>
+                        <p class="plan-description">Ideal para estudiantes activos</p>
+                    </div>
+                    <ul class="plan-features">
+                        <li><i class="ri-check-line"></i> Acceso ilimitado a todos los cursos</li>
+                        <li><i class="ri-check-line"></i> Más de 10,000 cursos disponibles</li>
+                        <li><i class="ri-check-line"></i> Certificados profesionales</li>
+                        <li><i class="ri-check-line"></i> Soporte prioritario</li>
+                        <li><i class="ri-check-line"></i> Coach IA incluido</li>
+                        <li><i class="ri-check-line"></i> Cancela cuando quieras</li>
+                    </ul>
+                    <button class="btn-plan btn-plan-primary"><i class="ri-rocket-line"></i> Inicia tu Prueba Gratuita</button>
+                </div>
+
+                <!-- Plan Anual -->
+                <div class="pricing-card">
+                    <div class="plan-header">
+                        <h3>Plan Anual</h3>
+                        <div class="plan-price">
+                            <span class="price-amount">$399</span>
+                            <span class="price-period">/año</span>
+                        </div>
+                        <p class="plan-description">Ahorra 44% con el plan anual</p>
+                        <div class="plan-savings">Ahorra $309 al año</div>
+                    </div>
+                    <ul class="plan-features">
+                        <li><i class="ri-check-line"></i> Todo lo del plan mensual</li>
+                        <li><i class="ri-check-line"></i> Acceso ilimitado a todos los cursos</li>
+                        <li><i class="ri-check-line"></i> Más de 10,000 cursos disponibles</li>
+                        <li><i class="ri-check-line"></i> Certificados profesionales</li>
+                        <li><i class="ri-check-line"></i> Soporte prioritario 24/7</li>
+                        <li><i class="ri-check-line"></i> Coach IA avanzado</li>
+                        <li><i class="ri-check-line"></i> Garantía de devolución de 14 días</li>
+                    </ul>
+                    <button class="btn-plan btn-plan-primary"><i class="ri-rocket-line"></i> Inicia tu Prueba Gratuita</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2>Invierte en tu carrera</h2>
+            <div class="features-grid">
+                <div class="card">
+                    <h3><i class="ri-compass-3-line"></i> Explora nuevas habilidades</h3>
+                    <p>Accede a más de 10,000 cursos en IA, negocios, tecnología y más.</p>
+                </div>
+                <div class="card">
+                    <h3><i class="ri-badge-line"></i> Obtén credenciales valiosas</h3>
+                    <p>Recibe certificados por cada curso que completes.</p>
+                </div>
+                <div class="card">
+                    <h3><i class="ri-star-smile-line"></i> Aprende de los mejores</h3>
+                    <p>Cursos dirigidos por expertos y nuestro Coach IA.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <h2>El 77% de los estudiantes reportan beneficios profesionales</h2>
+            <button class="btn-hero"><i class="ri-rocket-line"></i> Inicia tu Prueba Gratuita de 7 Días</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4>Platform</h4>
+                    <a href="acerca-de.html"><i class="ri-information-line"></i> Acerca de</a>
+                    <a href="contacto.html"><i class="ri-briefcase-line"></i> Carreras</a>
+                    <a href="#"><i class="ri-book-2-line"></i> Catálogo</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="terminos.html"><i class="ri-file-text-line"></i> Términos y Condiciones</a>
+                    <a href="privacidad.html"><i class="ri-shield-check-line"></i> Política de Privacidad</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Más</h4>
+                    <a href="contacto.html"><i class="ri-lifebuoy-line"></i> Ayuda</a>
+                    <a href="contacto.html"><i class="ri-mail-send-line"></i> Contacto</a>
+                </div>
+            </div>
+            <p class="copyright">&copy; 2025 Class Hub Live. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Modal de Login -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">&times;</button>
+            <h2>Iniciar Sesión</h2>
+            <form id="loginForm">
+                <div class="user-type-selector">
+                    <label class="user-type-option">
+                        <input type="radio" name="userType" value="administrador" checked>
+                        <span>Administrador</span>
+                    </label>
+                    <label class="user-type-option">
+                        <input type="radio" name="userType" value="maestro">
+                        <span>Maestro</span>
+                    </label>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Correo Electrónico</label>
+                    <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                </div>
+                
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <span>Recordarme</span>
+                    </label>
+                    <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+                </div>
+                
+                <button type="submit" class="btn-submit"><i class="ri-login-circle-line"></i> Iniciar Sesión</button>
+                <p class="modal-footer-text" id="loginRegisterCta">
+                    ¿No tienes cuenta? <a href="#" class="switch-modal" id="goToRegister">Regístrate</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Registro -->
+    <div class="modal-overlay" id="registerModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeRegisterModal">&times;</button>
+            <h2>Crear Cuenta</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label>¿Qué quieres ser?</label>
+                    <div class="user-type-selector">
+                        <label class="user-type-option">
+                            <input type="radio" name="registerUserType" value="maestro" checked>
+                            <span><i class="ri-user-star-line"></i> Maestro</span>
+                        </label>
+                        <label class="user-type-option">
+                            <input type="radio" name="registerUserType" value="administrador">
+                            <span><i class="ri-admin-line"></i> Administrador</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="registerName">Nombre Completo</label>
+                    <input type="text" id="registerName" name="name" placeholder="Tu nombre completo" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerEmail">Correo Electrónico</label>
+                    <input type="email" id="registerEmail" name="email" placeholder="tu@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="registerPassword">Contraseña</label>
+                    <input type="password" id="registerPassword" name="password" placeholder="Mínimo 8 caracteres" required minlength="8">
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirmar Contraseña</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirma tu contraseña" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="terms-checkbox">
+                        <input type="checkbox" id="acceptTerms" required>
+                        <span>Acepto los <a href="terminos.html" target="_blank" class="link-terms">términos y condiciones</a> y la <a href="privacidad.html" target="_blank" class="link-terms">política de privacidad</a></span>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn-submit"><i class="ri-user-add-line"></i> Crear Cuenta</button>
+                <p class="modal-footer-text">
+                    ¿Ya tienes cuenta? <a href="#" class="switch-modal" id="goToLogin">Inicia Sesión</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Pago -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal-content payment-modal">
+            <button class="modal-close" id="closePaymentModal">&times;</button>
+            <h2><i class="ri-bank-card-line"></i> Procesar Pago</h2>
+            <div class="payment-plan-info" id="paymentPlanInfo">
+                <h3 id="selectedPlanName">Plan Mensual</h3>
+                <div class="payment-plan-price" id="selectedPlanPrice">$59/mes</div>
+            </div>
+            
+            <form id="paymentForm" autocomplete="off" novalidate data-form-type="other">
+                <div class="form-group">
+                    <label for="cardNumber">Número de Tarjeta *</label>
+                    <input type="text" id="cardNumber" name="demo_number" placeholder="4111 1111 1111 1111" maxlength="19" required autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-form-type="other" inputmode="numeric">
+                    <div class="card-icons">
+                        <i class="ri-visa-line" title="Visa"></i>
+                        <i class="ri-mastercard-line" title="Mastercard"></i>
+                        <i class="ri-bank-card-2-line" title="American Express"></i>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cardName">Nombre en la Tarjeta *</label>
+                        <input type="text" id="cardName" name="demo_name" placeholder="Juan Pérez" required autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-form-type="other">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cardExpiry">Fecha de Vencimiento *</label>
+                        <input type="text" id="cardExpiry" name="demo_expiry" placeholder="MM/AA" maxlength="5" required autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-form-type="other" inputmode="text">
+                        <small style="color: #718096; font-size: 12px; margin-top: 5px; display: block;">Formato: MM/AA (ej: 12/25)</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="cardCVV">CVV *</label>
+                        <input type="text" id="cardCVV" name="demo_cvv" placeholder="123" maxlength="4" required autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-form-type="other" inputmode="numeric">
+                        <small style="color: #718096; font-size: 12px; margin-top: 5px; display: block;">3-4 dígitos</small>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="billingEmail">Correo Electrónico para Facturación *</label>
+                    <input type="text" id="billingEmail" name="demo_email" placeholder="tu@email.com" required autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-form-type="other" inputmode="email">
+                </div>
+                
+                <div class="payment-summary">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="paymentSubtotal">$59.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Impuestos:</span>
+                        <span id="paymentTaxes">$0.00</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="paymentTotal">$59.00</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="terms-checkbox">
+                        <input type="checkbox" id="acceptPaymentTerms" required>
+                        <span>Acepto los <a href="terminos.html" target="_blank" class="link-terms">términos y condiciones</a> y autorizo el cargo</span>
+                    </label>
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button type="button" class="btn-submit" id="cancelPaymentBtn" style="background: #6b7280; flex: 1;">
+                        <i class="ri-close-line"></i> Cancelar
+                    </button>
+                    <button type="submit" class="btn-submit" id="processPaymentBtn" style="flex: 2;">
+                        <i class="ri-lock-line"></i> Procesar Pago
+                    </button>
+                </div>
+            </form>
+            
+            <!-- Mensaje de éxito del pago -->
+            <div class="payment-success" id="paymentSuccess" style="display: none;">
+                <div class="success-icon">
+                    <i class="ri-checkbox-circle-fill"></i>
+                </div>
+                <h3>¡Pago Procesado Exitosamente!</h3>
+                <p>Tu suscripción ha sido activada correctamente.</p>
+                <div class="success-details" id="successDetails"></div>
+                <button class="btn-submit" id="closeSuccessBtn">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Configuration - Con versiones para evitar caché -->
+    <script src="firebase-config.js?v=2.0"></script>
+    <!-- Firebase Authentication -->
+    <script src="firebase-auth.js?v=2.0"></script>
+    <script src="script.js?v=2.0"></script>
+    <script>
+    // Verificar estado de Firebase después de que todo esté cargado
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            if (!window.firebaseServices || !window.firebaseServices.auth) {
+                console.warn('⚠️ Firebase Auth no está disponible después de cargar la página');
+                console.log('Estado de Firebase:', window.firebaseServices);
+                
+                // Si hay un error, ya se mostró el mensaje
+                // Si no hay error pero tampoco hay auth, puede ser un problema de timing
+                if (window.firebaseServices && !window.firebaseServices.error) {
+                    console.log('💡 Intentando reinicializar Firebase...');
+                    // El AuthManager debería manejar esto, pero podemos forzar una verificación
+                    if (window.authManager) {
+                        window.authManager.init();
+                    }
+                }
+            } else {
+                console.log('✅ Firebase Auth está disponible y listo');
+            }
+        }, 2000); // Esperar 2 segundos después de cargar
+    });
+    </script>
+    <script>
+    (function() {
+        var userTypeInputs = document.querySelectorAll('input[name="userType"]');
+        var registerCta = document.getElementById('loginRegisterCta');
+        var goToRegister = document.getElementById('goToRegister');
+        var loginForm = document.getElementById('loginForm');
+
+        function updateRegisterVisibility() {
+            var selected = document.querySelector('input[name="userType"]:checked');
+            if (!selected) return;
+            var isAdmin = selected.value === 'administrador';
+            if (registerCta) {
+                registerCta.style.display = isAdmin ? 'none' : '';
+            }
+            if (goToRegister) {
+                goToRegister.setAttribute('aria-hidden', isAdmin ? 'true' : 'false');
+                goToRegister.tabIndex = isAdmin ? -1 : 0;
+            }
+        }
+
+        userTypeInputs.forEach(function(r) { r.addEventListener('change', updateRegisterVisibility); });
+        updateRegisterVisibility();
+
+        if (loginForm) {
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                var selected = document.querySelector('input[name="userType"]:checked');
+                if (!selected) return;
+
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+                const userType = selected.value;
+
+                // Validar que AuthManager esté disponible
+                if (!window.authManager) {
+                    alert('Error: Firebase no está inicializado. Por favor, recarga la página.');
+                    return;
+                }
+
+                // Esperar a que AuthManager esté listo
+                try {
+                    await window.authManager.ensureReady();
+                } catch (error) {
+                    alert('Error: Firebase Auth no está disponible.\n\n' +
+                          'Por favor, verifica la configuración y recarga la página.');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                    return;
+                }
+
+                // Deshabilitar botón durante el login
+                const submitBtn = loginForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="ri-loader-line"></i> Iniciando sesión...';
+
+                try {
+                    console.log('🔐 Iniciando sesión con:', email);
+                    // Iniciar sesión con Firebase
+                    const result = await window.authManager.iniciarSesion(email, password);
+                    
+                    console.log('📋 Resultado del login:', result);
+                    
+                    if (result.success) {
+                        console.log('✅ Login exitoso, procesando redirección...');
+                        // Verificar que el tipo de usuario coincida
+                        const userData = result.userData;
+                        let tipoUsuarioReal = userData?.tipoUsuario || 'estudiante';
+                        
+                        console.log('🔍 Información del usuario:', {
+                            email: email,
+                            tipoSeleccionado: userType,
+                            tipoReal: tipoUsuarioReal,
+                            userData: userData,
+                            uid: result.user?.uid
+                        });
+                        
+                        // Si el tipo no está definido o es 'estudiante', buscar en Firestore
+                        if (!tipoUsuarioReal || tipoUsuarioReal === 'estudiante') {
+                            console.log('⚠️ Tipo de usuario no encontrado en userData, buscando en Firestore...');
+                            console.log('🔍 UID del usuario:', result.user.uid);
+                            
+                            if (window.firebaseServices && window.firebaseServices.db) {
+                                try {
+                                    // Buscar en todas las colecciones en paralelo
+                                    const [docenteDoc, adminDoc, userDoc] = await Promise.all([
+                                        window.firebaseServices.db.collection('docentes').doc(result.user.uid).get(),
+                                        window.firebaseServices.db.collection('administradores').doc(result.user.uid).get(),
+                                        window.firebaseServices.db.collection('usuarios').doc(result.user.uid).get()
+                                    ]);
+                                    
+                                    console.log('🔍 Resultados de búsqueda:', {
+                                        enDocentes: docenteDoc.exists,
+                                        enAdministradores: adminDoc.exists,
+                                        enUsuarios: userDoc.exists
+                                    });
+                                    
+                                    if (docenteDoc.exists) {
+                                        const docenteData = docenteDoc.data();
+                                        tipoUsuarioReal = docenteData.tipoUsuario || 'maestro';
+                                        console.log('✅ Usuario encontrado como DOCENTE:', docenteData);
+                                    } else if (adminDoc.exists) {
+                                        const adminData = adminDoc.data();
+                                        tipoUsuarioReal = adminData.tipoUsuario || 'administrador';
+                                        console.log('✅ Usuario encontrado como ADMINISTRADOR:', adminData);
+                                    } else if (userDoc.exists) {
+                                        const userData = userDoc.data();
+                                        tipoUsuarioReal = userData.tipoUsuario || 'estudiante';
+                                        console.log('📄 Usuario encontrado en colección usuarios:', userData);
+                                    } else {
+                                        console.warn('⚠️ Usuario no encontrado en ninguna colección de Firestore');
+                                    }
+                                } catch (firestoreError) {
+                                    console.error('❌ Error al buscar en Firestore:', firestoreError);
+                                }
+                            } else {
+                                console.warn('⚠️ Firestore no está disponible para buscar el tipo de usuario');
+                            }
+                        }
+                        
+                        console.log('📊 Tipo de usuario final:', tipoUsuarioReal);
+                        
+                        // VERIFICAR QUE EL TIPO SELECCIONADO COINCIDA CON EL TIPO REAL
+                        if (userType !== tipoUsuarioReal) {
+                            // El tipo no coincide, mostrar error específico
+                            let mensaje = '❌ Tipo de usuario incorrecto\n\n';
+                            mensaje += 'Tipo seleccionado: ' + (userType === 'administrador' ? 'Administrador' : 'Maestro') + '\n';
+                            
+                            if (tipoUsuarioReal === 'maestro') {
+                                mensaje += 'Esta es una cuenta de MAESTRO.\n\n';
+                                mensaje += 'Por favor, selecciona "Maestro" en el formulario de inicio de sesión.';
+                            } else if (tipoUsuarioReal === 'administrador') {
+                                mensaje += 'Esta es una cuenta de ADMINISTRADOR.\n\n';
+                                mensaje += 'Por favor, selecciona "Administrador" en el formulario de inicio de sesión.';
+                            } else {
+                                mensaje += 'Tipo de cuenta: ' + (tipoUsuarioReal === 'estudiante' ? 'Estudiante' : 'No definido') + '\n\n';
+                                mensaje += 'Por favor, selecciona el tipo correcto o contacta al administrador.';
+                            }
+                            
+                            alert(mensaje);
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = originalText;
+                            return; // No permitir el acceso
+                        }
+                        
+                        // Si el tipo coincide, redirigir
+                        console.log('✅ Tipo de usuario coincide:', tipoUsuarioReal);
+                        console.log('🔄 Tipo seleccionado:', userType);
+                        console.log('🔄 Tipo real:', tipoUsuarioReal);
+                        
+                        let redirectUrl = null;
+                        
+                        if (userType === 'administrador' && tipoUsuarioReal === 'administrador') {
+                            redirectUrl = 'Administrador.html';
+                            console.log('→ Redirigiendo a Administrador.html');
+                        } else if (userType === 'maestro' && tipoUsuarioReal === 'maestro') {
+                            redirectUrl = 'Docente.html';
+                            console.log('→ Redirigiendo a Docente.html');
+                        } else {
+                            console.error('❌ Error: No se pudo determinar la página de destino');
+                            console.error('Tipo seleccionado:', userType);
+                            console.error('Tipo real:', tipoUsuarioReal);
+                            alert('⚠️ Error: No se pudo determinar la página de destino.\n\nTipo seleccionado: ' + userType + '\nTipo real: ' + tipoUsuarioReal + '\n\nPor favor, contacta al administrador.');
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = originalText;
+                            return;
+                        }
+                        
+                        // Redirigir INMEDIATAMENTE - SIN DELAYS
+                        if (redirectUrl) {
+                            console.log('🚀🚀🚀 REDIRIGIENDO A:', redirectUrl);
+                            console.log('📍 URL actual:', window.location.href);
+                            
+                            // Cerrar modal rápidamente
+                            const loginModal = document.getElementById('loginModal');
+                            if (loginModal) {
+                                loginModal.style.display = 'none';
+                            }
+                            
+                            // REDIRECCIÓN INMEDIATA - FORZAR
+                            console.log('🔄 FORZANDO REDIRECCIÓN...');
+                            
+                            // Método 1: href (más confiable)
+                            window.location.href = redirectUrl;
+                            
+                            // Método 2: replace (backup inmediato)
+                            window.location.replace(redirectUrl);
+                            
+                            // Método 3: Si aún no funciona después de 100ms, usar assign
+                            setTimeout(function() {
+                                const currentPath = window.location.pathname;
+                                const currentHref = window.location.href;
+                                console.log('📍 Verificando redirección. Path:', currentPath);
+                                
+                                if (currentPath.includes('index.html') || 
+                                    currentHref.includes('index.html') ||
+                                    currentPath === '/' || 
+                                    currentPath.endsWith('/')) {
+                                    console.warn('⚠️ Redirección no detectada, usando assign...');
+                                    window.location.assign(redirectUrl);
+                                    
+                                    // Último recurso: alert y redirección manual
+                                    setTimeout(function() {
+                                        if (window.location.pathname.includes('index.html') || 
+                                            window.location.href.includes('index.html')) {
+                                            console.error('❌ TODOS LOS MÉTODOS FALLARON');
+                                            const confirmar = confirm('⚠️ La redirección automática falló.\n\n¿Quieres ir manualmente a ' + redirectUrl + '?');
+                                            if (confirmar) {
+                                                window.open(redirectUrl, '_self');
+                                            }
+                                        }
+                                    }, 300);
+                                } else {
+                                    console.log('✅✅✅ REDIRECCIÓN EXITOSA');
+                                }
+                            }, 100);
+                            
+                            // SALIR INMEDIATAMENTE - NO EJECUTAR MÁS CÓDIGO
+                            return;
+                        } else {
+                            console.error('❌ No se determinó redirectUrl');
+                            console.error('userType:', userType);
+                            console.error('tipoUsuarioReal:', tipoUsuarioReal);
+                            alert('⚠️ Error: No se pudo determinar la URL de redirección.\n\nTipo seleccionado: ' + userType + '\nTipo real: ' + tipoUsuarioReal);
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = originalText;
+                            return;
+                        }
+                    } else {
+                        // Mostrar error más detallado
+                        let errorMsg = 'Error al iniciar sesión:\n\n' + result.error;
+                        
+                        // Agregar sugerencias según el tipo de error
+                        if (result.error.includes('password') || result.error.includes('contraseña')) {
+                            errorMsg += '\n\n💡 Verifica que la contraseña sea correcta.';
+                        } else if (result.error.includes('user') || result.error.includes('usuario')) {
+                            errorMsg += '\n\n💡 Verifica que el email sea correcto o crea una cuenta nueva.';
+                        } else if (result.error.includes('network') || result.error.includes('red')) {
+                            errorMsg += '\n\n💡 Verifica tu conexión a internet.';
+                        }
+                        
+                        alert(errorMsg);
+                        console.error('Error en login:', result);
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalText;
+                    }
+                } catch (error) {
+                    console.error('Error en login:', error);
+                    alert('Error inesperado al iniciar sesión. Por favor, intenta de nuevo.\n\nDetalles: ' + error.message);
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                }
+            });
+        }
+    })();
+    </script>
+</body>
+</html>
